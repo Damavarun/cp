@@ -1,0 +1,209 @@
+## https://atcoder.jp/contests/abc448/
+
+//A - chmin
+
+
+//Problem Description -- > link https://atcoder.jp/contests/abc448/tasks/abc448_a
+
+
+#include<bits/stdc++.h>
+using namespace std;
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n,traget;
+    cin>>n>>traget;
+
+    vector<int>arr(n);
+    vector<int>ans;
+
+    for(int i=0;i<n;i++){
+        cin>>arr[i];
+
+        if(arr[i]<traget){
+            ans.push_back(1);
+            traget=arr[i];
+        }
+        else{
+            ans.push_back(0);
+        }
+
+    }
+
+    for(int i=0;i<n;i++){
+        cout<<ans[i]<<endl;
+    }
+
+
+}
+
+
+//----------------------------------------------------------------------------------
+
+// B - Pepper Addiction  
+
+//Problem Description -- > link https://atcoder.jp/contests/abc448/tasks/abc448_b
+
+#include<bits/stdc++.h>
+using namespace std;
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n,m;
+    cin>>n>>m;
+
+    vector<int>C(m+1);
+
+    for(int i=1;i<=m;i++){
+        cin>>C[i];
+    }
+
+    vector<int>demand(m+1,0);
+    for(int i=0;i<n;i++){
+        int A,B;
+
+        cin>>A>>B;
+
+        demand[A]+=B;
+
+    }
+
+    long long ans = 0;
+
+    for(int i=1;i<=m;i++){
+        ans+=min(demand[i],C[i]);
+    }
+
+    cout<<ans<<endl;
+}
+
+
+
+//---------------------------------------------------------------------------------------
+
+// C - Except and Min
+
+//Problem Description -- > link https://atcoder.jp/contests/abc448/tasks/abc448_c
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int N,Q;
+
+    cin>>N>>Q;
+
+    vector<int>A(N+1);
+
+    for(int i=1;i<=N;i++){
+        cin>>A[i];
+    }
+    
+    vector<pair<int,int>>V;
+
+    for(int i=1;i<=N;i++){
+        V.push_back({A[i],i});
+    }
+
+    sort(V.begin(),V.end());
+
+    while(Q--){
+        int K;
+        cin>>K;
+       
+        
+        set<int>remove;
+
+        for(int i=1;i<=K;i++){
+            int x;
+            cin>>x;
+             remove.insert(x);
+        }
+
+        for(auto it:V){
+            if(!remove.count(it.second)){
+                cout<<it.first<<endl;
+                break;
+            }
+        }
+    }
+
+    return 0;
+}
+
+
+//------------------------------------------------------------------
+
+// D - Integer-duplicated Path 
+
+//Problem Description -- > link https://atcoder.jp/contests/abc448/tasks/abc448_d
+
+
+#include<bits/stdc++.h>
+using namespace std;
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int N;
+    cin>>N;
+
+    vector<long long>A(N+1);
+
+    for(int i=1;i<=N;i++){
+        cin>>A[i];
+    }
+
+    vector<vector<int>>adjls(N+1);
+
+    for(int i=0;i<N-1;i++){
+        int u,v;
+        cin>>u>>v;
+        adjls[u].push_back(v);
+        adjls[v].push_back(u);
+
+    }
+
+    vector<string>ans(N+1);
+
+    map<long long,int>freq;
+    
+    int dupcnt =0;
+
+    queue<int>q;
+    vector<int> parent(N+1,-1);
+
+    q.push(1);
+
+    while(!q.empty()){
+        int node =q.front();
+        q.pop();
+
+        freq[A[node]]++;
+
+
+        if(freq[A[node]]==2){
+            dupcnt++;
+        }
+        if(dupcnt>0){
+            ans[node] = "Yes";
+        }
+        else{
+            ans[node] = "No";
+        }
+
+        for(auto it:adjls[node]){
+            if(it==parent[node]){
+                continue;
+            }
+            parent[it]=node;
+            q.push(it);
+        }
+    }
+
+    for(int i=1;i<=N;i++){
+        cout << ans[i] << "\n";
+    }
+}
