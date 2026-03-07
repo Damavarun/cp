@@ -28,10 +28,7 @@ The goal of this repository is **consistency, improvement, and strong problem-so
 ```text
 📦 Competitive-Programming
  ┣ 📂 Codeforces
- ┃ ┣ 📜 problem_name.cpp
- ┃ ┗ 📜 explanation.md
  ┣ 📂 CodeChef
  ┣ 📂 LeetCode
- ┣ 📂 DSA
- ┣ 📂 Algorithms
+ ┣ 📂 Atcoder
  ┗ 📜 README.md
