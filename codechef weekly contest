@@ -1,0 +1,205 @@
+## codechef
+## div2
+---
+
+## problem 1 
+Imperfect Numbers
+
+#include <bits/stdc++.h>
+using namespace std;
+
+bool imperfect(int x){
+    if(x <= 0) return false;
+    bool by2 = (x % 2 == 0);
+    bool by5 = (x % 5 == 0);
+    return by2 ^ by5;   // XOR
+}
+
+int main(){
+    int T;
+    cin >> T;
+    
+    while(T--){
+        int N;
+        cin >> N;
+        
+        for(int d = 0; d <= 200; d++){
+            
+            if(imperfect(N - d)){
+                cout << d << endl;
+                break;
+            }
+            
+            if(imperfect(N + d)){
+                cout << d << endl;
+                break;
+            }
+        }
+    }
+}
+
+----
+
+### problem 2
+
+Double Discount
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int T;
+    cin >> T;
+
+    while(T--){
+        int N, K;
+        cin >> N >> K;
+
+        vector<int> A(N), B(N);
+        for(int i = 0; i < N; i++) cin >> A[i];
+        for(int i = 0; i < N; i++) cin >> B[i];
+
+        int ans = 0;
+
+        for(int i = 0; i < N; i++){
+            for(int j = i + 1; j < N; j++){
+
+                int mx = max(A[i], A[j]);
+                int mn = min(A[i], A[j]);
+
+                int discount = min(mx / 2, 100);
+                int cost = mn + (mx - discount);
+
+                if(cost <= K){
+                    ans = max(ans, B[i] + B[j]);
+                }
+            }
+        }
+
+        cout << ans << '\n';
+    }
+
+    return 0;
+}
+
+---
+## problem 3
+Target Temperature
+#include <bits/stdc++.h>
+using namespace std;
+void solve()
+{
+	int n;
+	i(n);
+	vll nums(n);
+	iv(nums);
+	ll maxi = *max_element(nums.begin(), nums.end());
+	umap <ll, int> hash;
+	for(ll num : nums){
+	    hash[num]++;
+	}
+	for(auto it : hash){
+	    if(it.second != 1){
+	        if(it.first != maxi){
+	            print("No");
+	            return;
+	        }
+	    }
+	}
+	print("Yes");
+}
+
+int main()
+{
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	int t = 1;
+	cin >> t;
+	while (t--)
+	{
+		solve();
+	}
+}
+
+## problem 4 
+Recurrence Reachability
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int modpow(int a,int b) {
+	int ans = 1;
+	while(b) {
+		if(b % 2 == 1) {
+			ans = (ans * a) % mod;
+		}
+		a = (a * a) % mod;
+		b >>= 1;
+	}
+	return ans;
+}
+ 
+//--main functions--//
+
+void solve() {
+    long long N, M;
+    cin >> N >> M;
+
+    if (M >= 1 && M < N) {
+        cout << M << " " << M + 1 << "\n";
+        return;
+    }
+
+    if (M > 1 && M <= N) {
+        cout << M - 1 << " " << M << "\n";
+        return;
+    }
+    for (long long pw = 4; pw <= 2e18; pw *= 2) {
+        long long s = pw - 1;           
+
+        long long d_max = (M - 1) / s;
+
+        long long d_min;
+        if (s == 1) {
+            continue;
+        }
+        long long gap = M - N; 
+        if (gap <= 0) {
+            d_min = 1;
+        } else {
+            d_min = (gap + (s - 2)) / (s - 1); 
+        }
+
+        d_min = max(d_min, 1LL);
+
+        if (d_min <= d_max) {
+            long long d = d_min;   
+            long long x = M - d * s;
+            long long y = x + d;
+            if (x >= 1 && y <= N && x < y) {
+                cout << x << " " << y << "\n";
+                return;
+            }
+        }
+
+        if (s >= M) break;
+    }
+
+    cout << -1 << "\n";
+}
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int T;
+    cin >> T;
+    while (T--) {
+        solve();
+    }
+    return 0;
+}
+
+---
